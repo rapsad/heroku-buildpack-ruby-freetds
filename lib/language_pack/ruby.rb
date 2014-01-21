@@ -72,6 +72,7 @@ class LanguagePack::Ruby < LanguagePack::Base
         "LANG"     => "en_US.UTF-8",
         "PATH"     => default_path,
         "GEM_PATH" => slug_vendor_base,
+        "LD_LIBRARY_PATH" => "vendor/freetds/lib:$LD_LIBRARY_PATH"
       }
 
       ruby_version.jruby? ? vars.merge({
@@ -117,7 +118,7 @@ private
   # the base PATH environment variable to be used
   # @return [String] the resulting PATH
   def default_path
-    "bin:#{bundler_binstubs_path}:/usr/local/bin:/usr/bin:/bin"
+    "$HOME/vendor/freetds/bin:bin:#{bundler_binstubs_path}:/usr/local/bin:/usr/bin:/bin"
   end
 
   # the relative path to the bundler directory of gems
@@ -224,6 +225,7 @@ private
       set_env_override "GEM_PATH", "$HOME/#{slug_vendor_base}:$GEM_PATH"
       set_env_default  "LANG",     "en_US.UTF-8"
       set_env_override "PATH",     "$HOME/bin:$HOME/#{slug_vendor_base}/bin:$HOME/#{bundler_binstubs_path}:$PATH"
+      set_env_override "LD_LIBRARY_PATH", "vendor/freetds/lib:$LD_LIBRARY_PATH"
 
       if ruby_version.jruby?
         set_env_default "JAVA_OPTS", default_java_opts
