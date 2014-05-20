@@ -72,7 +72,7 @@ private
         topic("Preparing app for Rails asset pipeline")
 
         ENV["RAILS_GROUPS"] ||= "assets"
-        ENV["RAILS_ENV"]    ||= "production"
+        ENV["RAILS_ENV"]    ||= "staging"
 
         puts "Running: rake assets:precompile"
         require 'benchmark'
